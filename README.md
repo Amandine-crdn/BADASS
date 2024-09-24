@@ -6,6 +6,7 @@ Install GNS3: https://superuser.com/questions/1788720/how-to-install-gns3-on-deb
 ## P1:
 Lancer gns3
 Creer les images docker
-Creer un projet sur gns3
+Creer un projet sur gns3 dans son p1
 Importer les images docker
-Sauvegarder le fichier gns3
+
+Install busybox
