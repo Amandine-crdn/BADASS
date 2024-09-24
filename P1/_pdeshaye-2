@@ -1,22 +1,3 @@
 FROM frrouting/frr
 
 COPY './frr_conf' /etc/frr/daemons
-
-RUN service frr restart
-
-#FROM alpine:latest
-
-#Install packages
-
-#RUN apk update && \
-#    apk add telnet quagga
-
-# Configutation 
-
-#RUN cp /usr/share/doc/quagga-0.99.22.4/zebra.conf.sample /etc/quagga/zebra.conf
-#RUN cp /usr/share/doc/quagga-0.99.22.4/bgpd.conf.sample /etc/quagga/bgpd.conf 
-
-# Start services
-
-#RUN service zebra start && \
-#    service bgpd start
