@@ -10,3 +10,72 @@ Creer un projet sur gns3 dans son p1
 Importer les images docker
 
 Install busybox
+
+# P2
+
+## Static
+
+### Host
+```bash
+ip addr add 30.1.1.1/24 dev eth1
+ip link set eth1 up
+```
+
+### Router
+```bash
+ip addr add 10.1.1.X/24 dev eth0 
+```
+
+```bash
+ip link add br0 type bridge 
+ip link set dev br0 up
+```
+
+```bash
+ip link add name vxlan10 type vxlan id 10 dev eth0 remote 10.1.1.X local 10.1.1.Y dstport 4789 
+ip addr add 20.1.1.1/24 dev vxlan10 
+ip link set dev vxlan10 up 
+```
+
+```bash
+brctl addif br0 eth1 
+brctl addif br0 vxlan10
+```
+
+## Multicast
+
+### Host
+```bash
+ip addr add 30.1.1.X/24 dev eth1
+ip link set eth1 up
+```
+
+### Router
+```bash
+ip addr add 10.1.1.X/24 dev eth0 
+```
+
+```bash
+ip link add br0 type bridge 
+ip link set dev br0 up
+```
+
+```bash
+ip link add name vxlan10 type vxlan id 10 dev eth0 group 239.1.1.1 dstport 4789 
+ip addr add 20.1.1.1/24 dev vxlan10 
+ip link set dev vxlan10 up 
+```
+
+```bash
+brctl addif br0 eth1 
+brctl addif br0 vxlan10
+```
+
+## commands check 
+```` bash
+ip link show vxlan10 
+ip link show ethX
+ip link show
+
+brctl showmacs br0
+```` 
