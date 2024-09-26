@@ -79,3 +79,21 @@ ip link show
 
 brctl showmacs br0
 ```` 
+## or insert into a config file
+
+auto eth0
+iface eth0 inet static
+    address 10.1.1.1
+    netmask 255.255.255.0
+
+auto br0
+iface br0 inet manual
+    bridge_ports eth1 vxlan10
+    pre-up ip link add br0 type bridge
+    up ip link set br0 up
+
+iface vxlan10 inet static
+    address 20.1.1.1
+    netmask 255.255.255.0
+    pre-up ip link add name vxlan10 type vxlan id 10 dev eth0 remote 10.1.1.1 local 10.1.1.2 dstport 4789
+    up ip link set vxlan10 up
