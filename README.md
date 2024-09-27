@@ -31,11 +31,25 @@ Pour les gateways:
 
 Pour la partie static -> dynamique : au lieu de relier les 2 gateways, on definit un groupe
 
-
-
-
-
-
-
 On lance GNS3, on creer nos VM (2 gateways, 2 hosts)
 dynamic multicast
+
+## P3:
+### Interface eth0
+- Desactiver le routage ivp6
+- Attribution d'une IP sur le meme subnet 10.1.1.1/30
+- Configuration interface pour utiliser protocole routage OSPF (backbone zone)
+
+### Interface lo (loopback) 
+- Attribution d'une IP 1.1.1.2/32 (unique)
+- Configuration interface pour utiliser protocole routage OSPF (backbone zone)
+
+### BGP (Border Gateway Protocol) 
+- Activer le BGP avec l'AS (Autonomous System) numéro 1.
+- Configure un voisin BGP avec l'adresse 1.1.1.1, qui appartient également à l'AS 1 (ce qui signifie qu'il s'agit d'un BGP interne, ou iBGP).
+- Spécifie que les mises à jour BGP doivent utiliser l'interface loopback comme source.
+
+### Address family l2vpn evpn 
+- Active l'adresse familiale l2vpn evpn pour le BGP EVPN, qui est utilisé dans des environnements où l'on transporte des informations de niveau 2 (Ethernet) à travers BGP.
+- Active le voisin BGP 1.1.1.1 pour cette adresse familiale.
+- Annonce tous les VNI (VXLAN Network Identifiers) au voisin.
