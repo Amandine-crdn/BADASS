@@ -1,3 +1,20 @@
+#FROM frrouting/frr
+
+#COPY './frr_conf' /etc/frr/daemons
+
+
+
+
 FROM frrouting/frr
 
+# Copier la configuration FRRouting
 COPY './frr_conf' /etc/frr/daemons
+
+# Installer tini pour gérer le processus d'init
+RUN apt-get update && apt-get install -y tini
+
+# Utiliser tini comme process manager
+ENTRYPOINT ["/usr/bin/tini", "--"]
+
+# Commande pour démarrer FRRouting
+CMD ["/usr/lib/frr/frrinit.sh", "start"]
