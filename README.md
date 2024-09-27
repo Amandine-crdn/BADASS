@@ -35,14 +35,18 @@ On lance GNS3, on creer nos VM (2 gateways, 2 hosts)
 dynamic multicast
 
 ## P3:
+
+Topologie du réseau : 1 Spine et 3 Leafs
 ### Interface eth0
 - Desactiver le routage ivp6
 - Attribution d'une IP sur le meme subnet 10.1.1.1/30
 - Configuration interface pour utiliser protocole routage OSPF (backbone zone)
 
+### Backbone zone (aire OSPF 0)
+
+
 ### Interface lo (loopback) 
-- Attribution d'une IP 1.1.1.2/32 (unique)
-- Configuration interface pour utiliser protocole routage OSPF (backbone zone)
+Interface virtuelle,  toujours disponible (pas de panne comme eth0) tant que l'équipement est opérationnel. Elle permet donc d'avoir une adresse IP stable, souvent utilisée pour identifier le routeur dans les protocoles de routage (comme BGP et OSPF)., permet d'acceder a distance au routeur: identité stable du routeur pour les communications BGP et OSPF.
 
 ### BGP (Border Gateway Protocol) 
 - Activer le BGP avec l'AS (Autonomous System) numéro 1.
@@ -53,3 +57,14 @@ dynamic multicast
 - Active l'adresse familiale l2vpn evpn pour le BGP EVPN, qui est utilisé dans des environnements où l'on transporte des informations de niveau 2 (Ethernet) à travers BGP.
 - Active le voisin BGP 1.1.1.1 pour cette adresse familiale.
 - Annonce tous les VNI (VXLAN Network Identifiers) au voisin.
+
+### VXLAN avec BGP EVPN :
+
+    Nous avons configuré BGP pour assurer la communication de niveau 3 (IP) entre les routeurs.
+    Nous avons utilisé VXLAN pour transporter des réseaux de niveau 2 (comme un LAN ou un VLAN) au-dessus de l'infrastructure niveau 3 (IP).
+    BGP EVPN a été utilisé pour distribuer les informations VXLAN (comme les adresses MAC et les informations de routage IP) entre les routeurs.
+
+### OSPF :
+
+    Chaque routeur est également configuré avec OSPF pour assurer le routage interne dans l'aire 0 (backbone).
+    OSPF assure que toutes les routes sont bien propagées entre les routeurs au sein du réseau local.
