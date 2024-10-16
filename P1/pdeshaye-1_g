@@ -1,3 +1,0 @@
-FROM frrouting/frr
-
-COPY './frr_conf' /etc/frr/daemons
