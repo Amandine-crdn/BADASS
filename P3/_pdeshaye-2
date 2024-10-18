@@ -1,16 +1,13 @@
-<!-- dans le terminal -->
 ip link add br0 type bridge 
 ip link set dev br0 up
-ip link add vxlan10 type vxlan id 10 dstport 4789 
+ip link add vxlan10 type vxlan id 10 dev eth0 dstport 4789 
 ip link set dev vxlan10 up 
 brctl addif br0 vxlan10
 brctl addif br0 eth1 
 
-<!-- dans le terminal -> 
-```conf t```
--->
-
-hostname acerdan-1_g
+vtysh << EOF
+conf t
+hostname _pdeshaye-2 
 no ipv6 forwarding
 !
 interface eth0
@@ -32,3 +29,4 @@ router bgp 1
 !
 router ospf
 !
+EOF

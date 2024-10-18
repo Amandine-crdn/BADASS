@@ -1,12 +1,7 @@
-<!-- dans le terminal -->
-
-
-<!-- dans le terminal -> 
-```conf t```
--->
-
-hostname acerdan-1_s
-nno ipv6 forwarding
+vtysh << EOF
+conf t
+hostname _pdeshaye-1
+no ipv6 forwarding
 !
 interface eth0
  ip address 10.1.1.1/30
@@ -24,7 +19,7 @@ router bgp 1
  neighbor ibgp peer-group
  neighbor ibgp remote-as 1
  neighbor ibgp update-source lo
- neighbor ibgp listen range 1.1.1.0/29 peer-group ibgp
+ bgp listen range 1.1.1.0/29 peer-group ibgp
 !
  address-family l2vpn evpn
   neighbor ibgp activate
@@ -32,3 +27,6 @@ router bgp 1
  exit-address-family
 !
 router ospf
+ network 0.0.0.0/0 area 0
+!
+EOF
